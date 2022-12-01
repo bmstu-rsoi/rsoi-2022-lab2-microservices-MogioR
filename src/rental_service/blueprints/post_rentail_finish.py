@@ -2,12 +2,11 @@ import json
 from quart import Blueprint, Response, request
 from .models.rental_model import RentalModel
 
+post_rental_finish_blueprint = Blueprint('post_rental_finish', __name__, )
 
-delete_current_rental_blueprint = Blueprint('delete_current_rental', __name__,)
 
-
-@delete_current_rental_blueprint.route('/api/v1/rental/<string:rental_uid>', methods=['DELETE'])
-async def delete_current_rental(rental_uid: str) -> Response:
+@post_rental_finish_blueprint.route('/api/v1/rental/<string:rental_uid>/finish', methods=['POST'])
+async def post_rental_finish(rental_uid: str) -> Response:
     try:
         rental = RentalModel.select().where(
             RentalModel.rental_uid == rental_uid
@@ -22,7 +21,7 @@ async def delete_current_rental(rental_uid: str) -> Response:
                 })
             )
 
-        rental.status = 'CANCELED'
+        rental.status = 'FINISHED'
         rental.save()
 
         return Response(

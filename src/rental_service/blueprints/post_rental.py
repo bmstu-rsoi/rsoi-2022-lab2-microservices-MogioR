@@ -18,7 +18,7 @@ def validate_body(body):
     if 'carUid' not in body or type(body['carUid']) is not str or\
             'dateFrom' not in body or type(body['dateFrom']) is not str or\
             'dateTo' not in body or type(body['dateTo']) is not str or\
-            'payment_uid' not in body or type(body['payment_uid']) is not str:
+            'paymentUid' not in body or type(body['paymentUid']) is not str:
         return None, ['Bad structure body!']
 
     return body, errors
@@ -51,7 +51,7 @@ async def post_rental() -> Response:
         car_uid=uuid.UUID(body['carUid']),
         date_from=datetime.datetime.strptime(body['dateFrom'], "%Y-%m-%d").date(),
         date_to=datetime.datetime.strptime(body['dateTo'], "%Y-%m-%d").date(),
-        payment_uid=uuid.UUID(body['payment_uid']),
+        payment_uid=uuid.UUID(body['paymentUid']),
         status='IN_PROGRESS'
     )
 

@@ -6,23 +6,23 @@ from .models.rental_model import RentalModel
 get_rental_blueprint = Blueprint('get_rental', __name__,)
 
 
-@get_rental_blueprint.route('/api/v1/rental/', methods=['GET'])
-async def get_rental() -> Response:
-    if 'X-User-Name' not in request.headers.keys():
+@get_rental_blueprint.route('/api/v1/rental/<string:rental_uid>', methods=['GET'])
+async def get_rental(rental_uid: str) -> Response:
+    try:
+        rental = RentalModel.select().where(
+            RentalModel.rental_uid == rental_uid
+        ).get().to_dict()
+
         return Response(
-            status=400,
+            status=200,
+            content_type='application/json',
+            response=json.dumps(rental)
+        )
+    except:
+        return Response(
+            status=404,
             content_type='application/json',
             response=json.dumps({
-                'errors': ['Request has not X-User-Name header!']
+                'errors': ['Uid not found in base.']
             })
         )
-
-    user = request.headers['X-User-Name']
-
-    rentals = [rental.to_dict() for rental in RentalModel.select().where(RentalModel.username == user)]
-
-    return Response(
-        status=200,
-        content_type='application/json',
-        response=json.dumps(rentals)
-    )
