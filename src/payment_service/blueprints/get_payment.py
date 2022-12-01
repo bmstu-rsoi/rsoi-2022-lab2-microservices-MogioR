@@ -3,11 +3,11 @@ from quart import Blueprint, Response, request
 from .models.payment_model import PaymentModel
 
 
-get_current_payment_blueprint = Blueprint('get_current_payment', __name__,)
+get_payment_blueprint = Blueprint('get_payment', __name__,)
 
 
-@get_current_payment_blueprint.route('/api/v1/payment/<string:payment_uid>', methods=['GET'])
-async def get_current_payment(payment_uid: str) -> Response:
+@get_payment_blueprint.route('/api/v1/payment/<string:payment_uid>', methods=['GET'])
+async def get_payment(payment_uid: str) -> Response:
     try:
         payment = PaymentModel.select().where(
             PaymentModel.payment_uid == payment_uid
