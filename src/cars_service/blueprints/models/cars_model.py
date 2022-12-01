@@ -21,7 +21,7 @@ class CarsModel(BaseModel):
             "registrationNumber": str(self.registration_number),
             "power": self.power,
             "type": str(self.type),
-            "price": int(self.price),
+            "price": self.price,
             "available": bool(self.availability)
         }
 

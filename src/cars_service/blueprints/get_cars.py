@@ -1,6 +1,4 @@
-import os
 import json
-import requests
 from quart import Blueprint, Response, request
 from .models.cars_model import CarsModel
 
@@ -61,11 +59,12 @@ async def get_cars() -> Response:
         )
 
     if not show_all:
-        count_total = CarsModel.select().count()
-        rentals = [rental.to_dict() for rental in CarsModel.select(CarsModel.availability == True).paginate(page, size)]
+        query = CarsModel.select().where(CarsModel.availability == True)
+        count_total = query.count()
+        cars = [car.to_dict() for car in query.paginate(page, size)]
     else:
         count_total = CarsModel.select().count()
-        rentals = [rental.to_dict() for rental in CarsModel.select().paginate(page, size)]
+        cars = [car.to_dict() for car in CarsModel.select().paginate(page, size)]
 
     return Response(
         status=200,
@@ -74,6 +73,6 @@ async def get_cars() -> Response:
           "page": page,
           "pageSize": size,
           "totalElements": count_total,
-          "items": rentals
+          "items": cars
         })
     )
