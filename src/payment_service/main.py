@@ -1,0 +1,20 @@
+from quart import Quart
+from blueprints.models.payment_model import PaymentModel
+from blueprints.get_current_payment import get_current_payment_blueprint
+from blueprints.post_payment import post_payment_blueprint
+from blueprints.delete_payment import delete_current_payment_blueprint
+
+app = Quart(__name__)
+app.register_blueprint(get_current_payment_blueprint)
+app.register_blueprint(post_payment_blueprint)
+app.register_blueprint(delete_current_payment_blueprint)
+
+
+def create_tables():
+    PaymentModel.drop_table()
+    PaymentModel.create_table()
+
+
+if __name__ == '__main__':
+    create_tables()
+    app.run(port=8002)
