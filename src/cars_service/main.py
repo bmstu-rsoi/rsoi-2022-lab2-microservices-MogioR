@@ -13,7 +13,7 @@ app.register_blueprint(delete_car_order_blueprint)
 
 
 def create_tables():
-    # CarsModel.drop_table()
+    CarsModel.drop_table()
     CarsModel.create_table()
 
     CarsModel.get_or_create(
@@ -30,5 +30,5 @@ def create_tables():
 
 
 if __name__ == '__main__':
-    # create_tables()
+    create_tables()
     app.run(port=8070)

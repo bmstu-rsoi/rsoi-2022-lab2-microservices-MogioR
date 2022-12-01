@@ -6,11 +6,11 @@ from .models.payment_model import PaymentModel
 delete_current_payment_blueprint = Blueprint('delete_current_payment', __name__,)
 
 
-@delete_current_payment_blueprint.route('/api/v1/payment/<string:payment_uid>', methods=['DELETE'])
-async def get_current_payment(payment_uid: str) -> Response:
+@delete_current_payment_blueprint.route('/api/v1/payment/<string:paymentUid>', methods=['DELETE'])
+async def get_current_payment(paymentUid: str) -> Response:
     try:
         payment = PaymentModel.select().where(
-            PaymentModel.payment_uid == payment_uid
+            PaymentModel.payment_uid == paymentUid
         ).get()
 
         payment.status = 'CANCELED'

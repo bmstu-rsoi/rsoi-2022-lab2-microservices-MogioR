@@ -5,11 +5,11 @@ from .models.cars_model import CarsModel
 delete_car_order_blueprint = Blueprint('delete_car_order', __name__, )
 
 
-@delete_car_order_blueprint.route('/api/v1/cars/<string:car_uid>/order', methods=['DELETE'])
-async def delete_car_order(car_uid: str) -> Response:
+@delete_car_order_blueprint.route('/api/v1/cars/<string:carUid>/order', methods=['DELETE'])
+async def delete_car_order(carUid: str) -> Response:
     try:
         car = CarsModel.select().where(
-            CarsModel.car_uid == car_uid
+            CarsModel.car_uid == carUid
         ).get()
 
         if car.availability is True:

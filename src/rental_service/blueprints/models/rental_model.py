@@ -14,12 +14,12 @@ class RentalModel(BaseModel):
 
     def to_dict(self):
         return {
-            "rental_uid": str(self.rental_uid),
+            "rentalUid": str(self.rental_uid),
             "username": str(self.username),
-            "payment_uid": str(self.payment_uid),
-            "car_uid": str(self.car_uid),
-            "date_from": str(self.date_from),
-            "date_to": str(self.date_to),
+            "paymentUid": str(self.payment_uid),
+            "carUid": str(self.car_uid),
+            "dateFrom": str(self.date_from),
+            "dateTo": str(self.date_to),
             "status": str(self.status)
         }
 

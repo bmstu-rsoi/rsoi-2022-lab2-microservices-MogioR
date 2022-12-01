@@ -5,17 +5,17 @@ from .models.cars_model import CarsModel
 get_car_blueprint = Blueprint('get_car', __name__, )
 
 
-@get_car_blueprint.route('/api/v1/cars/<string:car_uid>', methods=['GET'])
-async def get_car(car_uid: str) -> Response:
+@get_car_blueprint.route('/api/v1/cars/<string:carUid>', methods=['GET'])
+async def get_car(carUid: str) -> Response:
     try:
-        payment = CarsModel.select().where(
-            CarsModel.car_uid == car_uid
+        car = CarsModel.select().where(
+            CarsModel.car_uid == carUid
         ).get().to_dict()
 
         return Response(
             status=200,
             content_type='application/json',
-            response=json.dumps(payment)
+            response=json.dumps(car)
         )
     except:
         return Response(

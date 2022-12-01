@@ -5,11 +5,11 @@ from .models.cars_model import CarsModel
 post_car_order_blueprint = Blueprint('post_car_order', __name__, )
 
 
-@post_car_order_blueprint.route('/api/v1/cars/<string:car_uid>/order', methods=['POST'])
-async def post_car_order(car_uid: str) -> Response:
+@post_car_order_blueprint.route('/api/v1/cars/<string:carUid>/order', methods=['POST'])
+async def post_car_order(carUid: str) -> Response:
     try:
         car = CarsModel.select().where(
-            CarsModel.car_uid == car_uid
+            CarsModel.car_uid == carUid
         ).get()
 
         if car.availability is False:
@@ -25,7 +25,9 @@ async def post_car_order(car_uid: str) -> Response:
         car.save()
 
         return Response(
-            status=200
+            status=200,
+            content_type='application/json',
+            response=json.dumps(car.to_dict())
         )
     except:
         return Response(

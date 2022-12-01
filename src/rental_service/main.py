@@ -16,7 +16,7 @@ app.register_blueprint(post_rental_finish_blueprint)
 
 
 def create_tables():
-    # RentalModel.drop_table()
+    RentalModel.drop_table()
     RentalModel.create_table()
 
 

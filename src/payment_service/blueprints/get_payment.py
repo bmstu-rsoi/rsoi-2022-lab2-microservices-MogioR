@@ -6,11 +6,11 @@ from .models.payment_model import PaymentModel
 get_payment_blueprint = Blueprint('get_payment', __name__,)
 
 
-@get_payment_blueprint.route('/api/v1/payment/<string:payment_uid>', methods=['GET'])
-async def get_payment(payment_uid: str) -> Response:
+@get_payment_blueprint.route('/api/v1/payment/<string:paymentUid>', methods=['GET'])
+async def get_payment(paymentUid: str) -> Response:
     try:
         payment = PaymentModel.select().where(
-            PaymentModel.payment_uid == payment_uid
+            PaymentModel.payment_uid == paymentUid
         ).get().to_dict()
 
         return Response(

@@ -10,7 +10,7 @@ class PaymentModel(BaseModel):
 
     def to_dict(self):
         return {
-            "payment_uid": str(self.payment_uid),
+            "paymentUid": str(self.payment_uid),
             "status": str(self.status),
             "price": self.price,
         }
