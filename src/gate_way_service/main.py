@@ -15,4 +15,4 @@ app.register_blueprint(post_rental_finish_blueprint)
 app.register_blueprint(get_rental_blueprint)
 
 if __name__ == '__main__':
-    app.run(port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080)

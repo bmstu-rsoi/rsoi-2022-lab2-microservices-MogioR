@@ -13,8 +13,78 @@ services:
       - ./postgres/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 3s
+      timeout: 3s
+      retries: 5
 
-# TODO добавить сервисы
+  cars_service:
+    build: src/cars_service
+    container_name: cars_service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "postgres"
+      DATA_BASE_USER: "postgres"
+      DATA_BASE_PASS: "postgres"
+      DATA_BASE_HOST: "postgres"
+    ports:
+      - "8070:8070"
+
+  payment_service:
+    build: src/payment_service
+    container_name: payment_service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "postgres"
+      DATA_BASE_USER: "postgres"
+      DATA_BASE_PASS: "postgres"
+      DATA_BASE_HOST: "postgres"
+    ports:
+      - "8050:8050"
+
+  rental_service:
+    build: src/rental_service
+    container_name: rental_service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "postgres"
+      DATA_BASE_USER: "postgres"
+      DATA_BASE_PASS: "postgres"
+      DATA_BASE_HOST: "postgres"
+    ports:
+      - "8060:8060"
+
+  gate_way_service:
+    build: src/gate_way_service
+    container_name: gate_way_service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATA_BASE_PORT: "5432"
+      DATA_BASE_NAME: "postgres"
+      DATA_BASE_USER: "postgres"
+      DATA_BASE_PASS: "postgres"
+      DATA_BASE_HOST: "postgres"
+      CARS_SERVICE_HOST: "cars_service"
+      CARS_SERVICE_PORT: "8070"
+      PAYMENT_SERVICE_HOST: "payment_service"
+      PAYMENT_SERVICE_PORT: "8050"
+      RENTAL_SERVICE_HOST: "rental_service"
+      RENTAL_SERVICE_PORT: "8060"
+
+    ports:
+      - "8080:8080"
 
 volumes:
   db-data:

@@ -1,7 +1,6 @@
 import os
 from peewee import Model, PostgresqlDatabase
 
-
 pg_db = PostgresqlDatabase(
     os.getenv('DATA_BASE_NAME'),
     user=os.getenv('DATA_BASE_USER'),
