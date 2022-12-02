@@ -11,7 +11,7 @@ get_cars_blueprint = Blueprint('get_cars', __name__, )
 async def get_cars() -> Response:
     response = get_data_from_service('http://' + os.environ['CARS_SERVICE_HOST'] + ':' +
                                      os.environ['CARS_SERVICE_PORT'] + '/' + 'api/v1/cars?' +
-                                     request.referrer.split('?')[-1], timeout=5)
+                                     request.full_path.split('?')[-1], timeout=5)
     if response:
         return Response(
             status=response.status_code,
