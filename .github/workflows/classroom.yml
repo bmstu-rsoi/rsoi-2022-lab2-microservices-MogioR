@@ -27,13 +27,14 @@ jobs:
         timeout-minutes: 5
         run: |
           docker compose up -d
+          ./scripts/wait-script.sh
         env:
           WAIT_PORTS: 8080,8070,8060,8050
 
-      - name: Wait 30s
+      - name: Wait 15s
         uses: jakejarvis/wait-action@master
         with:
-          time: '30s'
+          time: '15s'
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
